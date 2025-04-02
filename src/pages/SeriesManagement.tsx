@@ -99,6 +99,7 @@ const SeriesManagement = () => {
       views: 0,
       createdAt: new Date().toISOString().split('T')[0],
       status: 'draft' as SeriesStatus, // Cast to specific string literal type
+      monetization: (seriesData.monetization || 'free') as MonetizationType // Ensure proper type casting
     };
     
     setSeriesList([newSeries, ...seriesList]);

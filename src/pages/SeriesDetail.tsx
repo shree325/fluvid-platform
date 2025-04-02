@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
@@ -42,11 +41,9 @@ import AddEpisodeDialog from '@/components/series/AddEpisodeDialog';
 import ScheduleReleaseDialog from '@/components/series/ScheduleReleaseDialog';
 import MonetizationSettingsDialog from '@/components/series/MonetizationSettingsDialog';
 
-// Define proper types
 type EpisodeStatus = 'published' | 'draft' | 'scheduled';
 type MonetizationType = 'free' | 'subscription' | 'pay-per-view';
 
-// Mock data for a specific series
 const mockSeriesData = {
   id: '1',
   title: 'Product Mastery Course',
@@ -63,7 +60,6 @@ const mockSeriesData = {
   tags: ['product', 'tutorial', 'mastery', 'course'],
 };
 
-// Mock data for seasons
 const mockSeasons = [
   {
     id: '1',
@@ -91,7 +87,6 @@ const mockSeasons = [
   }
 ];
 
-// Mock data for episodes
 const mockEpisodes = [
   {
     id: '1',
@@ -168,7 +163,6 @@ const SeriesDetail = () => {
   const [episodes, setEpisodes] = useState(mockEpisodes);
   const [currentSeason, setCurrentSeason] = useState(seasons[0]?.id || 'all');
   
-  // Dialog states
   const [isCreateSeasonOpen, setIsCreateSeasonOpen] = useState(false);
   const [isEditSeriesOpen, setIsEditSeriesOpen] = useState(false);
   const [isAddEpisodeOpen, setIsAddEpisodeOpen] = useState(false);
@@ -204,7 +198,7 @@ const SeriesDetail = () => {
       number: episodeData.number,
       duration: '00:00',
       thumbnail: episodeData.thumbnail || 'https://images.unsplash.com/photo-1579403124614-197f69d8187b?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3',
-      status: 'draft' as EpisodeStatus, // Cast to specific string literal type
+      status: 'draft' as EpisodeStatus,
       videoId: episodeData.videoId,
       views: 0,
       releaseDate: episodeData.releaseDate || new Date().toISOString().split('T')[0],
@@ -213,7 +207,6 @@ const SeriesDetail = () => {
     
     setEpisodes([...episodes, newEpisode]);
     
-    // Update episode count for the season
     const updatedSeasons = seasons.map(season => {
       if (season.id === episodeData.seasonId) {
         return {
@@ -225,7 +218,7 @@ const SeriesDetail = () => {
     });
     setSeasons(updatedSeasons);
     
-    toast.success('Episode added successfully');
+    toast.success('Episode added successfully!');
     setIsAddEpisodeOpen(false);
   };
   
@@ -501,7 +494,6 @@ const SeriesDetail = () => {
         </div>
       </div>
       
-      {/* Dialogs */}
       <CreateSeasonDialog
         open={isCreateSeasonOpen}
         onClose={() => setIsCreateSeasonOpen(false)}
