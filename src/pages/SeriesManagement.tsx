@@ -23,6 +23,10 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import SeriesCard from '@/components/series/SeriesCard';
 import CreateSeriesDialog from '@/components/series/CreateSeriesDialog';
 
+// Define proper types
+type SeriesStatus = 'published' | 'draft' | 'scheduled';
+type MonetizationType = 'free' | 'subscription' | 'pay-per-view';
+
 // Mock data for series
 const mockSeries = [
   {
@@ -35,8 +39,8 @@ const mockSeries = [
     episodes: 12,
     views: 34500,
     createdAt: '2023-08-10',
-    monetization: 'subscription',
-    status: 'published',
+    monetization: 'subscription' as MonetizationType,
+    status: 'published' as SeriesStatus,
   },
   {
     id: '2',
@@ -48,8 +52,8 @@ const mockSeries = [
     episodes: 8,
     views: 21300,
     createdAt: '2023-09-05',
-    monetization: 'free',
-    status: 'published',
+    monetization: 'free' as MonetizationType,
+    status: 'published' as SeriesStatus,
   },
   {
     id: '3',
@@ -61,8 +65,8 @@ const mockSeries = [
     episodes: 24,
     views: 52100,
     createdAt: '2023-07-22',
-    monetization: 'pay-per-view',
-    status: 'published',
+    monetization: 'pay-per-view' as MonetizationType,
+    status: 'published' as SeriesStatus,
   },
   {
     id: '4',
@@ -74,8 +78,8 @@ const mockSeries = [
     episodes: 6,
     views: 8700,
     createdAt: '2023-10-18',
-    monetization: 'free',
-    status: 'draft',
+    monetization: 'free' as MonetizationType,
+    status: 'draft' as SeriesStatus,
   },
 ];
 
@@ -94,7 +98,7 @@ const SeriesManagement = () => {
       episodes: 0,
       views: 0,
       createdAt: new Date().toISOString().split('T')[0],
-      status: 'draft',
+      status: 'draft' as SeriesStatus, // Cast to specific string literal type
     };
     
     setSeriesList([newSeries, ...seriesList]);

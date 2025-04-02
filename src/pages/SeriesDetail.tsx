@@ -42,6 +42,10 @@ import AddEpisodeDialog from '@/components/series/AddEpisodeDialog';
 import ScheduleReleaseDialog from '@/components/series/ScheduleReleaseDialog';
 import MonetizationSettingsDialog from '@/components/series/MonetizationSettingsDialog';
 
+// Define proper types
+type EpisodeStatus = 'published' | 'draft' | 'scheduled';
+type MonetizationType = 'free' | 'subscription' | 'pay-per-view';
+
 // Mock data for a specific series
 const mockSeriesData = {
   id: '1',
@@ -200,7 +204,7 @@ const SeriesDetail = () => {
       number: episodeData.number,
       duration: '00:00',
       thumbnail: episodeData.thumbnail || 'https://images.unsplash.com/photo-1579403124614-197f69d8187b?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3',
-      status: 'draft',
+      status: 'draft' as EpisodeStatus, // Cast to specific string literal type
       videoId: episodeData.videoId,
       views: 0,
       releaseDate: episodeData.releaseDate || new Date().toISOString().split('T')[0],
