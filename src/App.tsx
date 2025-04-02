@@ -14,6 +14,8 @@ import Layout from "./components/Layout";
 import ProfileSettings from "./pages/ProfileSettings";
 import MonetizationSettings from "./pages/MonetizationSettings";
 import VideoDetails from "./pages/VideoDetails";
+import SeriesManagement from "./pages/SeriesManagement";
+import SeriesDetail from "./pages/SeriesDetail";
 import { AuthProvider } from "./contexts/AuthContext";
 
 const queryClient = new QueryClient();
@@ -35,6 +37,8 @@ const App = () => (
               <Route path="profile" element={<ProfileSettings />} />
               <Route path="monetization" element={<MonetizationSettings />} />
               <Route path="video/:videoId" element={<VideoDetails />} />
+              <Route path="series" element={<SeriesManagement />} />
+              <Route path="series/:seriesId" element={<SeriesDetail />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>

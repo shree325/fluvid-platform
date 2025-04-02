@@ -1,6 +1,6 @@
 
 import { Link, useLocation } from 'react-router-dom';
-import { Home, Play, BarChart3, Settings, DollarSign, LogOut, Plus, UserCircle } from 'lucide-react';
+import { Home, Play, BarChart3, Settings, DollarSign, LogOut, Plus, UserCircle, Folders } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAuth } from '../contexts/AuthContext';
 import { Button } from './ui/button';
@@ -11,12 +11,13 @@ const Sidebar = () => {
   const { user, logout } = useAuth();
 
   const isActive = (path: string) => {
-    return location.pathname === path;
+    return location.pathname === path || location.pathname.startsWith(`${path}/`);
   };
 
   const navItems = [
     { path: '/', label: 'Dashboard', icon: Home },
     { path: '/editor', label: 'Editor', icon: Play },
+    { path: '/series', label: 'Series', icon: Folders },
     { path: '/analytics', label: 'Analytics', icon: BarChart3 },
     { path: '/profile', label: 'Profile', icon: UserCircle },
     { path: '/monetization', label: 'Monetization', icon: DollarSign },
@@ -50,8 +51,8 @@ const Sidebar = () => {
                 <Link
                   to={item.path}
                   className={cn(
-                    "sidebar-link",
-                    isActive(item.path) && "active"
+                    "flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md hover:bg-accent",
+                    isActive(item.path) && "bg-accent"
                   )}
                 >
                   <item.icon className="h-4 w-4" />
