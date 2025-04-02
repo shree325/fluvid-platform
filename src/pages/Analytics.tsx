@@ -11,7 +11,10 @@ import {
   ChevronUp,
   Eye,
   ThumbsUp,
-  MessageSquare
+  MessageSquare,
+  FileQuestion,
+  MousePointerClick,
+  Layers
 } from 'lucide-react';
 import { 
   Card, 
