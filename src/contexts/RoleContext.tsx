@@ -23,6 +23,10 @@ const defaultPermissions: Record<string, UserRole[]> = {
   'change:global-theme': ['admin'],
   'view:monetization': ['admin', 'creator'],
   'edit:monetization': ['admin'],
+  'edit:channel': ['admin', 'creator'],
+  'manage:templates': ['admin'],
+  'set:video-privacy': ['admin', 'creator'],
+  'set:age-restriction': ['admin'],
 };
 
 const RoleContext = createContext<RoleContextType | undefined>(undefined);

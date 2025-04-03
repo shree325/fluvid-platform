@@ -1,6 +1,6 @@
 
 import { Link, useLocation } from 'react-router-dom';
-import { Home, Play, BarChart3, Settings, DollarSign, LogOut, Plus, UserCircle, Folders } from 'lucide-react';
+import { Home, Play, BarChart3, Settings, DollarSign, LogOut, Plus, UserCircle, Folders, Globe } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAuth } from '../contexts/AuthContext';
 import { Button } from './ui/button';
@@ -21,6 +21,7 @@ const Sidebar = () => {
     { path: '/analytics', label: 'Analytics', icon: BarChart3 },
     { path: '/profile', label: 'Profile', icon: UserCircle },
     { path: '/monetization', label: 'Monetization', icon: DollarSign },
+    { path: '/channel-settings', label: 'Channel Settings', icon: Globe },
   ];
 
   return (

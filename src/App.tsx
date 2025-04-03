@@ -18,6 +18,7 @@ import VideoDetails from "./pages/VideoDetails";
 import SeriesManagement from "./pages/SeriesManagement";
 import SeriesDetail from "./pages/SeriesDetail";
 import MyVideos from "./pages/MyVideos";
+import ChannelSettings from "./pages/ChannelSettings";
 import { AuthProvider } from "./contexts/AuthContext";
 import { RoleProvider } from "./contexts/RoleContext";
 
@@ -45,6 +46,7 @@ const App = () => (
                   <Route path="series" element={<SeriesManagement />} />
                   <Route path="series/:seriesId" element={<SeriesDetail />} />
                   <Route path="my-videos" element={<MyVideos />} />
+                  <Route path="channel-settings" element={<ChannelSettings />} />
                 </Route>
                 <Route path="*" element={<NotFound />} />
               </Routes>
