@@ -1,15 +1,13 @@
+
 import { useState } from 'react';
-import { Bell, Search, MessageSquare } from 'lucide-react';
+import { Search } from 'lucide-react';
 import { Input } from './ui/input';
-import { Button } from './ui/button';
 import { ThemeToggle } from './theme/theme-toggle';
 import { NotificationsDialog } from './ui/notifications-dialog';
 import { MessagesDialog } from './ui/messages-dialog';
 import { AccountSwitcher } from './ui/account-switcher';
 
 const Header = () => {
-  
-
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background">
       <div className="container flex h-16 items-center justify-between py-4">

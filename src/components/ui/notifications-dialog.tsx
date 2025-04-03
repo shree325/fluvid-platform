@@ -2,18 +2,20 @@
 import * as React from "react";
 import { Bell, Check, Trash2 } from "lucide-react";
 
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
 
 type Notification = {
   id: string;
@@ -83,8 +85,8 @@ export function NotificationsDialog() {
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
+    <Drawer open={open} onOpenChange={setOpen}>
+      <DrawerTrigger asChild>
         <Button variant="outline" size="icon" className="relative">
           <Bell className="h-5 w-5" />
           {unreadCount > 0 && (
@@ -93,10 +95,10 @@ export function NotificationsDialog() {
             </span>
           )}
         </Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle className="flex items-center justify-between">
+      </DrawerTrigger>
+      <DrawerContent className="max-h-[85vh] flex flex-col">
+        <DrawerHeader className="border-b">
+          <DrawerTitle className="flex items-center justify-between">
             Notifications
             <div className="flex gap-2">
               <Button variant="ghost" size="sm" onClick={markAllAsRead}>
@@ -108,44 +110,23 @@ export function NotificationsDialog() {
                 Clear all
               </Button>
             </div>
-          </DialogTitle>
-          <DialogDescription>
+          </DrawerTitle>
+          <DrawerDescription>
             Stay updated with your latest activity and alerts.
-          </DialogDescription>
-        </DialogHeader>
-        <Tabs defaultValue="all">
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="all">All</TabsTrigger>
-            <TabsTrigger value="unread">Unread</TabsTrigger>
-            <TabsTrigger value="mentions">Mentions</TabsTrigger>
-          </TabsList>
-          <TabsContent value="all">
-            <ScrollArea className="max-h-[300px]">
-              {notifications.length > 0 ? (
-                <div className="space-y-2 py-2">
-                  {notifications.map((notification) => (
-                    <NotificationItem
-                      key={notification.id}
-                      notification={notification}
-                      onMarkAsRead={markAsRead}
-                      onDelete={deleteNotification}
-                    />
-                  ))}
-                </div>
-              ) : (
-                <div className="flex h-32 items-center justify-center text-muted-foreground">
-                  No notifications
-                </div>
-              )}
-            </ScrollArea>
-          </TabsContent>
-          <TabsContent value="unread">
-            <ScrollArea className="max-h-[300px]">
-              {notifications.filter(n => !n.isRead).length > 0 ? (
-                <div className="space-y-2 py-2">
-                  {notifications
-                    .filter(n => !n.isRead)
-                    .map((notification) => (
+          </DrawerDescription>
+        </DrawerHeader>
+        <div className="flex-1 p-4">
+          <Tabs defaultValue="all">
+            <TabsList className="grid w-full grid-cols-3">
+              <TabsTrigger value="all">All</TabsTrigger>
+              <TabsTrigger value="unread">Unread</TabsTrigger>
+              <TabsTrigger value="mentions">Mentions</TabsTrigger>
+            </TabsList>
+            <TabsContent value="all">
+              <ScrollArea className="h-[60vh]">
+                {notifications.length > 0 ? (
+                  <div className="space-y-2 py-2">
+                    {notifications.map((notification) => (
                       <NotificationItem
                         key={notification.id}
                         notification={notification}
@@ -153,22 +134,50 @@ export function NotificationsDialog() {
                         onDelete={deleteNotification}
                       />
                     ))}
-                </div>
-              ) : (
-                <div className="flex h-32 items-center justify-center text-muted-foreground">
-                  No unread notifications
-                </div>
-              )}
-            </ScrollArea>
-          </TabsContent>
-          <TabsContent value="mentions">
-            <div className="flex h-32 items-center justify-center text-muted-foreground">
-              No mentions yet
-            </div>
-          </TabsContent>
-        </Tabs>
-      </DialogContent>
-    </Dialog>
+                  </div>
+                ) : (
+                  <div className="flex h-32 items-center justify-center text-muted-foreground">
+                    No notifications
+                  </div>
+                )}
+              </ScrollArea>
+            </TabsContent>
+            <TabsContent value="unread">
+              <ScrollArea className="h-[60vh]">
+                {notifications.filter(n => !n.isRead).length > 0 ? (
+                  <div className="space-y-2 py-2">
+                    {notifications
+                      .filter(n => !n.isRead)
+                      .map((notification) => (
+                        <NotificationItem
+                          key={notification.id}
+                          notification={notification}
+                          onMarkAsRead={markAsRead}
+                          onDelete={deleteNotification}
+                        />
+                      ))}
+                  </div>
+                ) : (
+                  <div className="flex h-32 items-center justify-center text-muted-foreground">
+                    No unread notifications
+                  </div>
+                )}
+              </ScrollArea>
+            </TabsContent>
+            <TabsContent value="mentions">
+              <div className="flex h-32 items-center justify-center text-muted-foreground">
+                No mentions yet
+              </div>
+            </TabsContent>
+          </Tabs>
+        </div>
+        <DrawerFooter className="border-t pt-4">
+          <DrawerClose asChild>
+            <Button variant="outline" className="w-full">Close</Button>
+          </DrawerClose>
+        </DrawerFooter>
+      </DrawerContent>
+    </Drawer>
   );
 }
 

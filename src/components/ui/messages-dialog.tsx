@@ -2,20 +2,20 @@
 import * as React from "react";
 import { MessageSquare, Check, Trash2, Send } from "lucide-react";
 
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 type Message = {
   id: string;
@@ -142,8 +142,8 @@ export function MessagesDialog() {
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
+    <Sheet open={open} onOpenChange={setOpen}>
+      <SheetTrigger asChild>
         <Button variant="outline" size="icon" className="relative">
           <MessageSquare className="h-5 w-5" />
           {unreadCount > 0 && (
@@ -152,19 +152,19 @@ export function MessagesDialog() {
             </span>
           )}
         </Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[500px]">
-        <DialogHeader>
-          <DialogTitle>Messages</DialogTitle>
-          <DialogDescription>
+      </SheetTrigger>
+      <SheetContent side="right" className="w-[400px] sm:w-[500px] p-0 flex flex-col overflow-hidden">
+        <SheetHeader className="p-4 border-b">
+          <SheetTitle>Messages</SheetTitle>
+          <SheetDescription>
             Chat with team members and collaborators.
-          </DialogDescription>
-        </DialogHeader>
+          </SheetDescription>
+        </SheetHeader>
         
-        <div className="flex h-[400px]">
+        <div className="flex flex-1 overflow-hidden">
           {/* Conversations list */}
-          <div className="w-1/3 border-r pr-2">
-            <ScrollArea className="h-full">
+          <div className="w-1/3 border-r pr-2 overflow-hidden flex flex-col">
+            <ScrollArea className="flex-1 h-full p-2">
               {conversations.map((conv) => (
                 <div
                   key={conv.id}
@@ -201,9 +201,9 @@ export function MessagesDialog() {
           </div>
           
           {/* Message thread */}
-          <div className="flex w-2/3 flex-col pl-2">
-            <ScrollArea className="flex-1">
-              <div className="space-y-4 p-2">
+          <div className="flex w-2/3 flex-col overflow-hidden">
+            <ScrollArea className="flex-1 p-2">
+              <div className="space-y-4">
                 {activeConversation && messages.map((message) => (
                   <div
                     key={message.id}
@@ -231,7 +231,7 @@ export function MessagesDialog() {
                 ))}
                 
                 {!activeConversation && (
-                  <div className="flex h-full items-center justify-center text-muted-foreground">
+                  <div className="flex h-[60vh] items-center justify-center text-muted-foreground">
                     Select a conversation to view messages
                   </div>
                 )}
@@ -239,7 +239,7 @@ export function MessagesDialog() {
             </ScrollArea>
             
             {activeConversation && (
-              <div className="mt-auto flex gap-2 p-2">
+              <div className="mt-auto flex gap-2 p-4 border-t">
                 <Input 
                   placeholder="Type your message..." 
                   value={newMessage}
@@ -253,7 +253,7 @@ export function MessagesDialog() {
             )}
           </div>
         </div>
-      </DialogContent>
-    </Dialog>
+      </SheetContent>
+    </Sheet>
   );
 }
