@@ -87,18 +87,18 @@ const mockSeasons = [
   }
 ];
 
-const mockEpisodes = [
+const mockedEpisodes = [
   {
     id: '1',
     seasonId: '1',
-    title: 'Introduction to the Platform',
+    title: 'Introduction to Series Creation',
     number: 1,
-    duration: '10:45',
-    thumbnail: 'https://images.unsplash.com/photo-1591267990532-e5bdb1b0ceb8?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3',
-    status: 'published',
-    videoId: 'video-1',
-    views: 15320,
-    releaseDate: '2023-08-15',
+    duration: '10:23',
+    thumbnail: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3',
+    status: 'published' as 'published' | 'draft' | 'scheduled',
+    videoId: 'video-123',
+    views: 1245,
+    releaseDate: '2023-10-01',
     isFreePreview: true,
   },
   {
@@ -160,7 +160,7 @@ const SeriesDetail = () => {
   const navigate = useNavigate();
   const [series, setSeries] = useState(mockSeriesData);
   const [seasons, setSeasons] = useState(mockSeasons);
-  const [episodes, setEpisodes] = useState(mockEpisodes);
+  const [episodes, setEpisodes] = useState(mockedEpisodes);
   const [currentSeason, setCurrentSeason] = useState(seasons[0]?.id || 'all');
   
   const [isCreateSeasonOpen, setIsCreateSeasonOpen] = useState(false);

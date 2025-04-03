@@ -6,7 +6,9 @@ import {
   LogOut,
   Settings,
   CreditCard,
-  Search
+  Search,
+  MessageSquare,
+  Layout
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -22,16 +24,39 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { ThemeToggle } from '@/components/theme/theme-toggle';
 import { useAuth } from '@/contexts/AuthContext';
+import { useToast } from '@/hooks/use-toast';
 
 export default function Header() {
   const { user, logout, accounts, switchAccount } = useAuth();
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState('');
+  const { toast } = useToast();
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     // Implement search functionality
     console.log('Search for:', searchValue);
+  };
+
+  const handleNotificationClick = () => {
+    toast({
+      title: "Notifications",
+      description: "You have no new notifications",
+    });
+  };
+
+  const handleMessageClick = () => {
+    toast({
+      title: "Messages",
+      description: "Chat functionality coming soon",
+    });
+  };
+
+  const handleTemplateClick = () => {
+    toast({
+      title: "Templates",
+      description: "Choose from different UI styles and layouts",
+    });
   };
 
   return (
@@ -53,7 +78,15 @@ export default function Header() {
         <div className="flex items-center gap-4">
           <ThemeToggle />
           
-          <Button variant="outline" size="icon">
+          <Button variant="outline" size="icon" onClick={handleTemplateClick}>
+            <Layout className="h-5 w-5" />
+          </Button>
+          
+          <Button variant="outline" size="icon" onClick={handleMessageClick}>
+            <MessageSquare className="h-5 w-5" />
+          </Button>
+          
+          <Button variant="outline" size="icon" onClick={handleNotificationClick}>
             <Bell className="h-5 w-5" />
           </Button>
           
