@@ -25,6 +25,9 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { ThemeToggle } from '@/components/theme/theme-toggle';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
+import { NotificationsDialog } from '@/components/ui/notifications-dialog';
+import { TemplateSelect } from '@/components/ui/template-selector';
+import { MessagesDialog } from '@/components/ui/messages-dialog';
 
 export default function Header() {
   const { user, logout, accounts, switchAccount } = useAuth();
@@ -38,25 +41,9 @@ export default function Header() {
     console.log('Search for:', searchValue);
   };
 
-  const handleNotificationClick = () => {
-    toast({
-      title: "Notifications",
-      description: "You have no new notifications",
-    });
-  };
-
-  const handleMessageClick = () => {
-    toast({
-      title: "Messages",
-      description: "Chat functionality coming soon",
-    });
-  };
-
-  const handleTemplateClick = () => {
-    toast({
-      title: "Templates",
-      description: "Choose from different UI styles and layouts",
-    });
+  const handleTemplateChange = (template: any) => {
+    console.log('Selected template:', template);
+    // Implement template change logic here
   };
 
   return (
@@ -78,17 +65,11 @@ export default function Header() {
         <div className="flex items-center gap-4">
           <ThemeToggle />
           
-          <Button variant="outline" size="icon" onClick={handleTemplateClick}>
-            <Layout className="h-5 w-5" />
-          </Button>
+          <TemplateSelect onSelectTemplate={handleTemplateChange} />
           
-          <Button variant="outline" size="icon" onClick={handleMessageClick}>
-            <MessageSquare className="h-5 w-5" />
-          </Button>
+          <MessagesDialog />
           
-          <Button variant="outline" size="icon" onClick={handleNotificationClick}>
-            <Bell className="h-5 w-5" />
-          </Button>
+          <NotificationsDialog />
           
           {user && (
             <DropdownMenu>

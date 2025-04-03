@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -23,69 +22,67 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import SeriesCard from '@/components/series/SeriesCard';
 import CreateSeriesDialog from '@/components/series/CreateSeriesDialog';
 
-// Define proper types
 type SeriesStatus = 'published' | 'draft' | 'scheduled';
 type MonetizationType = 'free' | 'subscription' | 'pay-per-view';
 
-// Mock data for series
-const mockSeries = [
+const series = [
   {
-    id: '1',
-    title: 'Product Mastery Course',
-    description: 'Complete guide to mastering our product suite',
-    thumbnail: 'https://images.unsplash.com/photo-1587614382346-4ec70e388b28?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3',
-    category: 'Educational',
+    id: "1",
+    title: "Web Development Fundamentals",
+    description: "Learn the basics of HTML, CSS, and JavaScript",
+    thumbnail: "https://via.placeholder.com/300x200",
+    category: "technology",
     seasons: 2,
-    episodes: 12,
-    views: 34500,
-    createdAt: '2023-08-10',
-    monetization: 'subscription' as MonetizationType,
-    status: 'published' as SeriesStatus,
-  },
-  {
-    id: '2',
-    title: 'Marketing Strategies',
-    description: 'Advanced marketing techniques for growth',
-    thumbnail: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3',
-    category: 'Marketing',
-    seasons: 1,
-    episodes: 8,
-    views: 21300,
-    createdAt: '2023-09-05',
-    monetization: 'free' as MonetizationType,
-    status: 'published' as SeriesStatus,
-  },
-  {
-    id: '3',
-    title: 'Developer Workshop',
-    description: 'Hands-on development tutorials',
-    thumbnail: 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3',
-    category: 'Technical',
-    seasons: 3,
     episodes: 24,
-    views: 52100,
-    createdAt: '2023-07-22',
-    monetization: 'pay-per-view' as MonetizationType,
-    status: 'published' as SeriesStatus,
+    views: 150000,
+    createdAt: "2022-11-15",
+    monetization: "free" as "free" | "subscription" | "pay-per-view",
+    status: "published" as "published" | "draft" | "scheduled",
   },
   {
-    id: '4',
-    title: 'Customer Success Stories',
-    description: 'Case studies and success stories',
-    thumbnail: 'https://images.unsplash.com/photo-1531538606174-0f90ff5dce83?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3',
-    category: 'Case Studies',
+    id: "2",
+    title: "Advanced React Patterns",
+    description: "Dive deep into advanced React concepts and patterns",
+    thumbnail: "https://via.placeholder.com/300x200",
+    category: "technology",
+    seasons: 1,
+    episodes: 12,
+    views: 75000,
+    createdAt: "2023-01-20",
+    monetization: "subscription" as "free" | "subscription" | "pay-per-view",
+    status: "published" as "published" | "draft" | "scheduled",
+  },
+  {
+    id: "3",
+    title: "Content Creation Masterclass",
+    description: "Learn how to create engaging video content",
+    thumbnail: "https://via.placeholder.com/300x200",
+    category: "creativity",
+    seasons: 3,
+    episodes: 36,
+    views: 200000,
+    createdAt: "2022-09-05",
+    monetization: "pay-per-view" as "free" | "subscription" | "pay-per-view",
+    status: "scheduled" as "published" | "draft" | "scheduled",
+  },
+  {
+    id: "4",
+    title: "Customer Success Stories",
+    description: "Case studies and success stories",
+    thumbnail: "https://images.unsplash.com/photo-1531538606174-0f90ff5dce83?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+    category: "Case Studies",
     seasons: 1,
     episodes: 6,
     views: 8700,
-    createdAt: '2023-10-18',
-    monetization: 'free' as MonetizationType,
-    status: 'draft' as SeriesStatus,
+    createdAt: "2023-10-18",
+    monetization: "free" as MonetizationType,
+    status: "draft" as SeriesStatus,
   },
 ];
 
 const SeriesManagement = () => {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
-  const [seriesList, setSeriesList] = useState(mockSeries);
+  const [seriesList, setSeriesList] = useState(series);
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const navigate = useNavigate();
@@ -98,8 +95,8 @@ const SeriesManagement = () => {
       episodes: 0,
       views: 0,
       createdAt: new Date().toISOString().split('T')[0],
-      status: 'draft' as SeriesStatus, // Cast to specific string literal type
-      monetization: (seriesData.monetization || 'free') as MonetizationType // Ensure proper type casting
+      status: 'draft' as SeriesStatus,
+      monetization: (seriesData.monetization || 'free') as MonetizationType
     };
     
     setSeriesList([newSeries, ...seriesList]);
@@ -111,7 +108,6 @@ const SeriesManagement = () => {
     navigate(`/series/${seriesId}`);
   };
 
-  // Filter series based on status
   const filteredSeries = filterStatus === 'all' 
     ? seriesList 
     : seriesList.filter(series => series.status === filterStatus);

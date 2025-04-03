@@ -60,6 +60,20 @@ const templates: Template[] = [
     screenshot: "https://via.placeholder.com/150?text=Creative",
     category: "creative",
   },
+  {
+    id: "classic-dark",
+    name: "Classic Dark",
+    description: "Traditional dark interface",
+    screenshot: "https://via.placeholder.com/150?text=Classic+Dark",
+    category: "classic",
+  },
+  {
+    id: "modern-gradient",
+    name: "Modern Gradient",
+    description: "Contemporary design with gradient accents",
+    screenshot: "https://via.placeholder.com/150?text=Modern+Gradient",
+    category: "modern",
+  },
 ];
 
 interface TemplateSelectProps {
@@ -90,52 +104,61 @@ export function TemplateSelect({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="flex items-center gap-2">
-          <Layout className="h-4 w-4" />
-          <span>Change Template</span>
+        <Button variant="outline" size="icon">
+          <Layout className="h-5 w-5" />
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[700px]">
         <DialogHeader>
           <DialogTitle>Select a Template</DialogTitle>
           <DialogDescription>
             Choose a template that fits your brand and content style.
           </DialogDescription>
         </DialogHeader>
-        <Command>
-          <CommandInput placeholder="Search templates..." />
-          <CommandList>
-            <CommandEmpty>No templates found.</CommandEmpty>
-            <CommandGroup>
-              {templates.map((template) => (
-                <CommandItem
-                  key={template.id}
-                  onSelect={() => handleSelect(template)}
-                  className="flex items-center justify-between"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="h-12 w-12 overflow-hidden rounded border">
-                      <img
-                        src={template.screenshot}
-                        alt={template.name}
-                        className="h-full w-full object-cover"
-                      />
-                    </div>
-                    <div className="flex flex-col">
-                      <span className="font-medium">{template.name}</span>
-                      <span className="text-xs text-muted-foreground">
-                        {template.description}
-                      </span>
-                    </div>
+        
+        <div className="grid grid-cols-2 gap-4 py-4">
+          {templates.map((template) => (
+            <div 
+              key={template.id}
+              className={cn(
+                "flex cursor-pointer flex-col overflow-hidden rounded-lg border transition-all hover:shadow-md",
+                selectedTemplate?.id === template.id ? "ring-2 ring-primary" : ""
+              )}
+              onClick={() => handleSelect(template)}
+            >
+              <div className="relative h-32 w-full">
+                <img
+                  src={template.screenshot}
+                  alt={template.name}
+                  className="h-full w-full object-cover"
+                />
+                {selectedTemplate?.id === template.id && (
+                  <div className="absolute right-2 top-2 rounded-full bg-primary p-1">
+                    <Check className="h-4 w-4 text-primary-foreground" />
                   </div>
-                  {selectedTemplate?.id === template.id && (
-                    <Check className="h-4 w-4 text-primary" />
-                  )}
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          </CommandList>
-        </Command>
+                )}
+              </div>
+              <div className="p-3">
+                <h3 className="font-medium">{template.name}</h3>
+                <p className="text-sm text-muted-foreground">{template.description}</p>
+                <div className="mt-2">
+                  <span className="inline-flex items-center rounded-full bg-muted px-2.5 py-0.5 text-xs font-medium">
+                    {template.category}
+                  </span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        
+        <DialogFooter>
+          <Button variant="outline" onClick={() => setOpen(false)}>
+            Cancel
+          </Button>
+          <Button onClick={() => selectedTemplate && handleSelect(selectedTemplate)}>
+            Apply Template
+          </Button>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
