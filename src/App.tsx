@@ -21,6 +21,7 @@ import MyVideos from "./pages/MyVideos";
 import ChannelSettings from "./pages/ChannelSettings";
 import { AuthProvider } from "./contexts/AuthContext";
 import { RoleProvider } from "./contexts/RoleContext";
+import { FloatingNotificationProvider } from "./components/ui/floating-notification-manager";
 
 const queryClient = new QueryClient();
 
@@ -30,27 +31,29 @@ const App = () => (
       <RoleProvider>
         <ThemeProvider defaultTheme="light" storageKey="fluvid-theme">
           <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <Routes>
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/" element={<Layout />}>
-                  <Route index element={<Dashboard />} />
-                  <Route path="editor/:videoId?" element={<VideoEditor />} />
-                  <Route path="analytics" element={<Analytics />} />
-                  <Route path="profile" element={<ProfileSettings />} />
-                  <Route path="monetization" element={<MonetizationSettings />} />
-                  <Route path="video/:videoId" element={<VideoDetails />} />
-                  <Route path="series" element={<SeriesManagement />} />
-                  <Route path="series/:seriesId" element={<SeriesDetail />} />
-                  <Route path="my-videos" element={<MyVideos />} />
-                  <Route path="channel-settings" element={<ChannelSettings />} />
-                </Route>
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </BrowserRouter>
+            <FloatingNotificationProvider>
+              <Toaster />
+              <Sonner />
+              <BrowserRouter>
+                <Routes>
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/register" element={<Register />} />
+                  <Route path="/" element={<Layout />}>
+                    <Route index element={<Dashboard />} />
+                    <Route path="editor/:videoId?" element={<VideoEditor />} />
+                    <Route path="analytics" element={<Analytics />} />
+                    <Route path="profile" element={<ProfileSettings />} />
+                    <Route path="monetization" element={<MonetizationSettings />} />
+                    <Route path="video/:videoId" element={<VideoDetails />} />
+                    <Route path="series" element={<SeriesManagement />} />
+                    <Route path="series/:seriesId" element={<SeriesDetail />} />
+                    <Route path="my-videos" element={<MyVideos />} />
+                    <Route path="channel-settings" element={<ChannelSettings />} />
+                  </Route>
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </BrowserRouter>
+            </FloatingNotificationProvider>
           </TooltipProvider>
         </ThemeProvider>
       </RoleProvider>

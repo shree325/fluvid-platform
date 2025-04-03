@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { 
@@ -40,6 +39,8 @@ import {
 } from '@/components/ui/select';
 import { toast } from 'sonner';
 import VideoCard from '@/components/VideoCard';
+import { VideoLeaderboard } from '@/components/video/VideoLeaderboard';
+import { useFloatingNotification } from '@/components/ui/floating-notification-manager';
 
 // Mock data for recommended videos
 const recommendedVideos = [
@@ -108,6 +109,7 @@ const VideoDetails = () => {
   const [duration, setDuration] = useState(100);
   const [volume, setVolume] = useState(80);
   const [newComment, setNewComment] = useState('');
+  const { showNotification } = useFloatingNotification();
   
   const handlePlayPause = () => {
     setIsPlaying(!isPlaying);
@@ -143,32 +145,60 @@ const VideoDetails = () => {
       return;
     }
     
-    toast.success('Comment posted successfully!');
+    showNotification({
+      title: "Comment Posted",
+      message: "Your comment has been posted successfully!",
+      type: "success"
+    });
     setNewComment('');
   };
   
   const handleLike = () => {
-    toast('Video liked');
+    showNotification({
+      title: "Video Liked",
+      message: "You have liked this video",
+      type: "info"
+    });
   };
   
   const handleDislike = () => {
-    toast('Video disliked');
+    showNotification({
+      title: "Video Disliked",
+      message: "You have disliked this video",
+      type: "info"
+    });
   };
   
   const handleSave = () => {
-    toast('Video saved to your library');
+    showNotification({
+      title: "Video Saved",
+      message: "Video saved to your library",
+      type: "success"
+    });
   };
   
   const handleShare = () => {
-    toast('Share options opened');
+    showNotification({
+      title: "Share Options",
+      message: "Share options opened",
+      type: "info"
+    });
   };
   
   const handleDownload = () => {
-    toast('Download started');
+    showNotification({
+      title: "Download Started",
+      message: "Your video download has started",
+      type: "success"
+    });
   };
   
   const handleReport = () => {
-    toast('Report submitted');
+    showNotification({
+      title: "Report Submitted",
+      message: "Thank you for helping us maintain community standards",
+      type: "warning"
+    });
   };
 
   return (
@@ -413,6 +443,9 @@ const VideoDetails = () => {
             </CardContent>
           </Card>
         </div>
+        
+        {/* Leaderboard */}
+        <VideoLeaderboard videoId={videoId} />
         
         {/* Comments */}
         <div className="space-y-4">
