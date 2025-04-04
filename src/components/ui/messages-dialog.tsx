@@ -1,6 +1,5 @@
-
 import * as React from "react";
-import { MessageSquare, Check, Trash2, Send } from "lucide-react";
+import { MessageSquare, Send } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -146,14 +145,9 @@ export function MessagesDialog() {
       <SheetTrigger asChild>
         <Button variant="outline" size="icon" className="relative">
           <MessageSquare className="h-5 w-5" />
-          {unreadCount > 0 && (
-            <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-destructive text-xs text-white">
-              {unreadCount}
-            </span>
-          )}
         </Button>
       </SheetTrigger>
-      <SheetContent side="right" className="w-[400px] sm:w-[500px] p-0 flex flex-col overflow-hidden">
+      <SheetContent side="right" className="w-[400px] sm:w-[540px] p-0 flex flex-col overflow-hidden">
         <SheetHeader className="p-4 border-b">
           <SheetTitle>Messages</SheetTitle>
           <SheetDescription>
@@ -190,7 +184,7 @@ export function MessagesDialog() {
                   <div className="flex flex-col items-end">
                     <span className="text-xs text-muted-foreground">{conv.timestamp}</span>
                     {conv.unreadCount > 0 && (
-                      <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs text-primary-foreground">
+                      <span className="flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white">
                         {conv.unreadCount}
                       </span>
                     )}

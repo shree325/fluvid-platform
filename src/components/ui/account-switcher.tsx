@@ -1,6 +1,6 @@
 
 import * as React from "react";
-import { PlusCircle, User, Users } from "lucide-react";
+import { PlusCircle, Users } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import {
   DropdownMenu,
@@ -78,24 +78,22 @@ export function AccountSwitcher() {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
+        <DropdownMenuLabel>Switch accounts</DropdownMenuLabel>
         <DropdownMenuGroup>
-          <DropdownMenuLabel>Switch accounts</DropdownMenuLabel>
           {accounts.map(account => (
             <DropdownMenuItem
               key={account.id}
-              className={`cursor-pointer ${account.id === "1" ? "bg-accent" : ""}`}
+              className="cursor-pointer p-0 focus:bg-transparent"
               onClick={() => switchAccount(account.id)}
             >
-              <div className="flex items-center space-x-2">
-                <Avatar className="h-6 w-6">
+              <div className={`flex w-full items-center rounded-md p-2 ${account.id === "1" ? "bg-accent" : "hover:bg-accent"}`}>
+                <Avatar className="h-8 w-8 mr-2">
                   <AvatarImage src={account.avatar} />
                   <AvatarFallback>{account.name[0]}</AvatarFallback>
                 </Avatar>
-                <div className="flex flex-col space-y-0">
-                  <p className="text-sm font-medium leading-none">{account.name}</p>
-                  <p className="text-xs leading-none text-muted-foreground">
-                    {account.role}
-                  </p>
+                <div className="flex flex-col">
+                  <span className="text-sm font-medium">{account.name}</span>
+                  <span className="text-xs text-muted-foreground">{account.role}</span>
                 </div>
               </div>
             </DropdownMenuItem>

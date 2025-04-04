@@ -89,11 +89,6 @@ export function NotificationsDialog() {
       <DrawerTrigger asChild>
         <Button variant="outline" size="icon" className="relative">
           <Bell className="h-5 w-5" />
-          {unreadCount > 0 && (
-            <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-destructive text-xs text-white">
-              {unreadCount}
-            </span>
-          )}
         </Button>
       </DrawerTrigger>
       <DrawerContent className="max-h-[85vh] flex flex-col">

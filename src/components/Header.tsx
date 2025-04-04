@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { Search } from 'lucide-react';
+import { Search, Bell, MessageSquare } from 'lucide-react';
 import { Input } from './ui/input';
 import { ThemeToggle } from './theme/theme-toggle';
 import { NotificationsDialog } from './ui/notifications-dialog';
@@ -24,8 +24,21 @@ const Header = () => {
         
         <div className="flex items-center gap-4">
           <ThemeToggle />
-          <MessagesDialog />
-          <NotificationsDialog />
+          
+          <div className="relative">
+            <MessagesDialog />
+            <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white">
+              2
+            </span>
+          </div>
+          
+          <div className="relative">
+            <NotificationsDialog />
+            <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white">
+              2
+            </span>
+          </div>
+          
           <AccountSwitcher />
         </div>
       </div>
