@@ -11,12 +11,11 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { Check, ChevronDown, ChevronRight, Globe, Users } from "lucide-react";
+import { Users } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useRole } from "@/contexts/RoleContext";
 import { toast } from "sonner";
 import { useAuth } from "@/contexts/AuthContext";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
 // Form schema for general settings
 const generalFormSchema = z.object({
@@ -27,14 +26,6 @@ const generalFormSchema = z.object({
 const basicInfoFormSchema = z.object({
   country: z.string().min(1, "Country is required"),
   keywords: z.string().optional(),
-});
-
-// Form schema for advanced settings
-const advancedSettingsFormSchema = z.object({
-  autoCaptions: z.boolean().default(false),
-  interestAds: z.boolean().default(true),
-  allowClipping: z.boolean().default(false),
-  thirdPartyTraining: z.boolean().default(false),
 });
 
 // Form schema for upload defaults
@@ -101,10 +92,6 @@ const ChannelSettings = () => {
   const { user } = useAuth();
   const { hasPermission } = useRole();
   const [activeTab, setActiveTab] = useState("general");
-  const [otherSettingsOpen, setOtherSettingsOpen] = useState(false);
-
-  // Feature eligibility level
-  const eligibilityLevel = "Advanced";
 
   // General form
   const generalForm = useForm<z.infer<typeof generalFormSchema>>({
@@ -120,17 +107,6 @@ const ChannelSettings = () => {
     defaultValues: {
       country: "us",
       keywords: "video, content, educational",
-    },
-  });
-
-  // Advanced settings form
-  const advancedForm = useForm<z.infer<typeof advancedSettingsFormSchema>>({
-    resolver: zodResolver(advancedSettingsFormSchema),
-    defaultValues: {
-      autoCaptions: true,
-      interestAds: true,
-      allowClipping: false,
-      thirdPartyTraining: false,
     },
   });
 
@@ -162,11 +138,6 @@ const ChannelSettings = () => {
     console.log("Basic info:", data);
   };
 
-  const onAdvancedSubmit = (data: z.infer<typeof advancedSettingsFormSchema>) => {
-    toast.success("Advanced settings saved successfully");
-    console.log("Advanced settings:", data);
-  };
-
   const onUploadDefaultsSubmit = (data: z.infer<typeof uploadDefaultsFormSchema>) => {
     toast.success("Upload defaults saved successfully");
     console.log("Upload defaults:", data);
@@ -177,18 +148,6 @@ const ChannelSettings = () => {
       toast.success(`Invitation sent to ${data.email}`);
       permissionsForm.reset({ email: "" });
     }
-  };
-
-  const handleLinkAccount = () => {
-    toast.success("Account linking initiated");
-  };
-
-  const handleManageAccount = () => {
-    toast.success("Redirecting to account management");
-  };
-
-  const handleRemoveContent = () => {
-    toast.info("Content removal options will be displayed");
   };
 
   // Check permissions
@@ -220,10 +179,9 @@ const ChannelSettings = () => {
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-        <TabsList className="grid grid-cols-5 w-full">
+        <TabsList className="grid grid-cols-4 w-full">
           <TabsTrigger value="general">General</TabsTrigger>
           <TabsTrigger value="channel">Channel</TabsTrigger>
-          <TabsTrigger value="advanced">Advanced Settings</TabsTrigger>
           <TabsTrigger value="upload">Upload Defaults</TabsTrigger>
           <TabsTrigger value="permissions">Permissions</TabsTrigger>
         </TabsList>
@@ -341,171 +299,6 @@ const ChannelSettings = () => {
                   <Button type="submit">Save Changes</Button>
                 </form>
               </Form>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        {/* Advanced Settings Tab */}
-        <TabsContent value="advanced">
-          <Card>
-            <CardHeader>
-              <CardTitle>Advanced Settings</CardTitle>
-              <CardDescription>
-                Configure advanced settings for your channel
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <Button onClick={handleLinkAccount} className="w-full">
-                Link Account
-              </Button>
-
-              <Form {...advancedForm}>
-                <form onSubmit={advancedForm.handleSubmit(onAdvancedSubmit)} className="space-y-6">
-                  <FormField
-                    control={advancedForm.control}
-                    name="autoCaptions"
-                    render={({ field }) => (
-                      <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
-                        <div className="space-y-0.5">
-                          <FormLabel className="text-base">Automatic Captions</FormLabel>
-                          <FormDescription>
-                            Enable automatic caption generation for your videos
-                          </FormDescription>
-                        </div>
-                        <FormControl>
-                          <Switch
-                            checked={field.value}
-                            onCheckedChange={field.onChange}
-                          />
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={advancedForm.control}
-                    name="interestAds"
-                    render={({ field }) => (
-                      <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
-                        <div className="space-y-0.5">
-                          <FormLabel className="text-base">Interest-based Ads</FormLabel>
-                          <FormDescription>
-                            Allow personalized ads based on viewer interests
-                          </FormDescription>
-                        </div>
-                        <FormControl>
-                          <Switch
-                            checked={field.value}
-                            onCheckedChange={field.onChange}
-                          />
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={advancedForm.control}
-                    name="allowClipping"
-                    render={({ field }) => (
-                      <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
-                        <div className="space-y-0.5">
-                          <FormLabel className="text-base">Allow Viewers to Clip Content</FormLabel>
-                          <FormDescription>
-                            Let viewers create short clips from your videos
-                          </FormDescription>
-                        </div>
-                        <FormControl>
-                          <Switch
-                            checked={field.value}
-                            onCheckedChange={field.onChange}
-                          />
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={advancedForm.control}
-                    name="thirdPartyTraining"
-                    render={({ field }) => (
-                      <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
-                        <div className="space-y-0.5">
-                          <FormLabel className="text-base">Enable Third-party Training</FormLabel>
-                          <FormDescription>
-                            Allow your content to be used for AI training purposes
-                          </FormDescription>
-                        </div>
-                        <FormControl>
-                          <Switch
-                            checked={field.value}
-                            onCheckedChange={field.onChange}
-                          />
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
-
-                  <Collapsible
-                    open={otherSettingsOpen}
-                    onOpenChange={setOtherSettingsOpen}
-                    className="border rounded-lg p-4"
-                  >
-                    <CollapsibleTrigger asChild>
-                      <div className="flex items-center justify-between cursor-pointer">
-                        <div className="text-base font-medium">Other Settings</div>
-                        <Button variant="ghost" size="sm">
-                          {otherSettingsOpen ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
-                        </Button>
-                      </div>
-                    </CollapsibleTrigger>
-                    <CollapsibleContent className="space-y-4 mt-4">
-                      <div className="rounded-lg border p-4">
-                        <h4 className="text-sm font-medium">Video Quality</h4>
-                        <p className="text-sm text-muted-foreground">
-                          Configure default video quality settings
-                        </p>
-                      </div>
-                      <div className="rounded-lg border p-4">
-                        <h4 className="text-sm font-medium">Audio Settings</h4>
-                        <p className="text-sm text-muted-foreground">
-                          Configure default audio processing settings
-                        </p>
-                      </div>
-                    </CollapsibleContent>
-                  </Collapsible>
-
-                  <div className="flex space-x-4">
-                    <Button onClick={handleManageAccount} variant="outline" className="flex-1">
-                      Manage Account
-                    </Button>
-                    <Button onClick={handleRemoveContent} variant="outline" className="flex-1">
-                      Remove Content
-                    </Button>
-                  </div>
-
-                  <Button type="submit">Save Changes</Button>
-                </form>
-              </Form>
-
-              <div className="border p-4 rounded-lg">
-                <div className="flex items-center space-x-2">
-                  <Globe className="h-5 w-5 text-primary" />
-                  <h3 className="text-base font-medium">Feature Eligibility</h3>
-                </div>
-                <div className="mt-2">
-                  <div className="text-sm font-medium">Current Level: {eligibilityLevel}</div>
-                  <div className="flex items-center space-x-2 mt-2">
-                    <div className="h-2 bg-primary rounded-full flex-1" />
-                    <div className="h-2 bg-primary rounded-full flex-1" />
-                    <div className="h-2 bg-primary rounded-full flex-1" />
-                  </div>
-                  <div className="flex justify-between text-xs mt-1">
-                    <span>Standard</span>
-                    <span>Intermediate</span>
-                    <span>Advanced</span>
-                  </div>
-                </div>
-              </div>
             </CardContent>
           </Card>
         </TabsContent>
