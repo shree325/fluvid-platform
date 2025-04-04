@@ -72,7 +72,7 @@ const VideoEditor = () => {
   const [monetizationStatus, setMonetizationStatus] = useState<'eligible' | 'limited' | 'ineligible'>('eligible');
 
   // Handle form input changes
-  const handleInputChange = (field: string, value: string | boolean) => {
+  const handleInputChange = (field: string, value: string | boolean | string[]) => {
     setVideoData(prev => ({
       ...prev,
       [field]: value,
